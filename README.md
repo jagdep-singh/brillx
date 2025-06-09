@@ -1,37 +1,54 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# BrillX
 
-## Getting Started
+BrillX is a powerful SaaS learning platform that allows users to learn **anything they ask**—instantly. Built with a modern tech stack, BrillX uses AI and dynamic content delivery to tailor knowledge based on user input.
 
-First, run the development server:
+---
+
+## 🚀 Features
+
+- 🔎 Ask any question, get a personalized explanation
+- 📚 Dynamic learning sessions tailored to user queries
+- 🧠 AI-assisted teaching engine (coming soon)
+- 🧾 User accounts with learning history (in progress)
+- 📈 Future support for learning analytics and progress tracking
+
+---
+
+## 🧰 Tech Stack
+
+| Layer        | Tech          |
+|--------------|---------------|
+| Frontend     | Next.js       |
+| Backend      | Node.js       |
+| Styling      | Tailwind CSS *(if used)* |
+| Auth (TBD)   | e.g., Auth.js / Clerk / Firebase |
+| Database     | e.g., MongoDB / PostgreSQL (please update) |
+| Hosting      | e.g., Vercel / Render / Railway |
+
+---
+
+## 📦 Installation
 
 ```bash
+# 1. Clone the repo
+git clone https://github.com/jagdep-singh/brillx.git
+cd brillx
+
+# 2. Install dependencies for frontend and backend
+cd frontend
+npm install
+cd ../backend
+npm install
+
+# 3. Set up environment variables
+# Create a .env file in both frontend/ and backend/ (see .env.example)
+
+# 4. Run the app
+# Terminal 1 - Start backend
+cd backend
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+# Terminal 2 - Start frontend
+cd frontend
+npm run dev
 
