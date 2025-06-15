@@ -21,9 +21,9 @@ BrillX is a powerful SaaS learning platform that allows users to learn **anythin
 | Frontend     | Next.js       |
 | Backend      | Node.js       |
 | Styling      | Tailwind CSS *(if used)* |
-| Auth (TBD)   | e.g., Auth.js / Clerk / Firebase |
-| Database     | e.g., MongoDB / PostgreSQL (please update) |
-| Hosting      | e.g., Vercel / Render / Railway |
+| Auth (TBD)   |  Clerk |
+| Database     |MongoDB  |
+| Hosting      | idk |
 
 ---
 
