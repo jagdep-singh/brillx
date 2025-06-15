@@ -3,6 +3,7 @@ import { getCompanion } from "@/lib/actions/companion.action";
 import { getSubjectColor } from "@/lib/utils";
 import { currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
+import CompanionComponent from "@/components/CompanionComponent";
 
 interface CompanionSessionPageProps{
     params: Promise<{id: string}>
@@ -12,8 +13,10 @@ interface CompanionSessionPageProps{
 const ComapnionSession = async ({params}: CompanionSessionPageProps) => {
 
     const {id} = await params;
-    const {name, subject, title, topic, duration} = await getCompanion(id);
+    const companion = await getCompanion(id);
     const user = await currentUser()
+
+    const {name, subject, title, topic, duration} = companion;
 
     if(!user) redirect('/sign-in');
     if(!name) redirect('/companions');
@@ -24,7 +27,7 @@ const ComapnionSession = async ({params}: CompanionSessionPageProps) => {
             <article className="flex rounded-border justify-between p-6 max-md:flex-col">
                 <div className="flex items-center gap-2">
                     <div className="size-[72] flex items-center justify-center rounded-lg maax-md:hidden" style={{backgroundColor:getSubjectColor(subject)}}>
-                        <Image src={`/icon/${subject}.svg`} alt={subject} width={35} height={35}></Image>
+                        <Image src={`/icons/${subject}.svg`} alt={subject} width={35} height={35}></Image>
                     </div>
                     <div className="flex flex-col gap-2">
                         <div className="flex items-center gap-2">
@@ -39,8 +42,16 @@ const ComapnionSession = async ({params}: CompanionSessionPageProps) => {
                     </div>
                 </div>
                 <div className="items-start text-2xl max-md:hidden">
+                    {duration} minutes
                 </div>
             </article>
+            <CompanionComponent 
+                {...companion}
+
+                companionId = {id}
+                userName = {user.firstName!}
+                userImage={user.imageUrl!}
+            />
         </main>
         
     )
