@@ -2,6 +2,7 @@
 
 import { auth } from "@clerk/nextjs/server"
 import { createSupabaseClient } from "../supabase";
+import { revalidatePath } from "next/cache";
 
 export const createCompanion = async (formData: CreateCompanion) => {
     
@@ -102,3 +103,119 @@ export const getUserSession = async(userId: string, limit=10) => {
 
     return data.map(({companions}) => companions)
 }
+
+export const getUserCompanions = async(userId: string) => {
+    const supabase = createSupabaseClient();
+    const {data, error} = await supabase
+        .from('companions')
+        .select()
+        .eq('author', userId)
+        
+
+    if(error) throw new Error(error.message);
+
+    return data;
+}
+// export const newCompanionPermissions = async () => {
+//   const { userId, has } = await auth();
+//   const supabase = createSupabaseClient();
+//   console.log('userId:', userId,
+//               'hasPro:', has({plan:'pro'}),
+//               'has3:', has({feature:'3_companion_limit'}),
+//               'has10:', has({feature:'10_companion_limit'}));
+//   if (has({ plan: 'pro' })) {
+//     console.log('Allowed: pro plan');
+//     return true;
+//   }
+//   let limit = 0;
+//   if (has({ feature: "3_companion_limit" })) limit = 3;
+//   else if (has({ feature: "10_companion_limit" })) limit = 10;
+//   console.log('Determined limit:', limit);
+//   if (limit <= 0) {
+//     console.log('Denied: no feature');
+//     return false;
+//   }
+//   const { data, count, error } = await supabase
+//     .from('companions')
+//     .select('id', { count: 'exact' })
+//     .eq('author', userId);
+//   if (error) throw new Error(error.message);
+//   const companionCount = count ?? 0;
+//   console.log('Existing companions:', companionCount);
+//   const allowed = companionCount < limit;
+//   console.log('Allowed by count check?', allowed);
+//   return allowed;
+// }; for debugging only also AI generated so dont Fuck around 🤷‍♂️ EVEN I DONT KNOW WHAT IT DOES SO 
+
+export const newCompanionPermissions = async () => {
+    const { userId, has } = await auth();
+    const supabase = createSupabaseClient();
+
+    let limit = 0;
+
+    if(has({ plan: 'pro' })) {
+        return true;
+    } else if(has({ feature: "3_companion_limit" })) {
+        limit = 3;
+    } else if(has({ feature: "10_companion_limit" })) {
+        limit = 10;
+    }
+
+    const { data, error } = await supabase
+        .from('companions')
+        .select('id', { count: 'exact' })
+        .eq('author', userId)
+
+    if(error) throw new Error(error.message);
+
+    const companionCount = data?.length;
+
+    if(companionCount >= limit) {
+        return false
+    } else {
+        return true;
+    }
+}
+export const addBookmark = async (companionId: string, path: string) => {
+  const { userId } = await auth();
+  if (!userId) return;
+  const supabase = createSupabaseClient();
+  const { data, error } = await supabase.from("bookmarks").insert({
+    companion_id: companionId,
+    user_id: userId,
+  });
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  revalidatePath(path);
+  return data;
+};
+
+export const removeBookmark = async (companionId: string, path: string) => {
+  const { userId } = await auth();
+  if (!userId) return;
+  const supabase = createSupabaseClient();
+  const { data, error } = await supabase
+    .from("bookmarks")
+    .delete()
+    .eq("companion_id", companionId)
+    .eq("user_id", userId);
+  if (error) {
+    throw new Error(error.message);
+  }
+  revalidatePath(path);
+  return data;
+};
+
+export const getBookmarkedCompanions = async (userId: string) => {
+  const supabase = createSupabaseClient();
+  const { data, error } = await supabase
+    .from("bookmarks")
+    .select(`companions:companion_id (*)`) 
+    .eq("user_id", userId);
+  if (error) {
+    throw new Error(error.message);
+  }
+  return data.map(({ companions }) => companions);
+};
