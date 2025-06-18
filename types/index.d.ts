@@ -67,6 +67,7 @@ interface Avatar {
 
 
 interface SavedMessage {
+  timestamp: ReactNode;
   role: "user" | "system" | "assistant";
   content: string;
 }
