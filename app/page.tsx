@@ -32,7 +32,7 @@ const Page = async () => {
 
       <section className='home-section'>
         <CompanionList 
-          title = "Recent completed session"
+          title = "Sessions Accross The Globe🌍"
           companions={recentSessionCompanion}
           classNames="w-2/3 max-lg:w-full"
         />
