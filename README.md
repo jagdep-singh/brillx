@@ -44,11 +44,9 @@ npm install
 # Create a .env file in both frontend/ and backend/ (see .env.example)
 
 # 4. Run the app
-# Terminal 1 - Start backend
 cd backend
 npm run dev
 
-# Terminal 2 - Start frontend
-cd frontend
-npm run dev
 
+```
+##Made and maintained by Jagdeep Singh
