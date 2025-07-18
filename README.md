@@ -49,6 +49,5 @@ npm run dev
 
 
 ```
----
+
 ## Made and maintained by Jagdeep Singh
----
