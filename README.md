@@ -50,5 +50,5 @@ npm run dev
 
 ```
 ---
-##Made and maintained by Jagdeep Singh
+## Made and maintained by Jagdeep Singh
 ---
