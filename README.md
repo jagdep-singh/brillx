@@ -19,7 +19,7 @@ BrillX is a powerful SaaS learning platform that allows users to learn **anythin
 | Layer        | Tech          |
 |--------------|---------------|
 | Frontend     | Next.js       |
-| Backend      |  Node.js (not a proper one coz of nextjs)      |
+| Backend      |  Node.js (not a proper one coz of nextjs yk)      |
 | Styling      | Tailwind CSS |
 | Auth (TBD)   |  Clerk |
 | Database     |MongoDB  |
