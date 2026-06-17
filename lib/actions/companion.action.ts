@@ -1,13 +1,12 @@
 'use server';
 
 import { auth } from "@clerk/nextjs/server"
-import { createSupabaseClient } from "../supabase";
-import { revalidatePath } from "next/cache";
+import { createSupabaseAdminClient, createSupabaseClient } from "../supabase";
 
 export const createCompanion = async (formData: CreateCompanion) => {
     
     const {userId : author } = await auth();
-    const supabase = createSupabaseClient();
+    const supabase = createSupabaseAdminClient();
 
     
     const { data, error } = await supabase
@@ -63,7 +62,7 @@ export const getCompanion = async (id: string) => {
 
 export const addToSessionHistory = async (companionId: string) => {
     const { userId } = await auth();
-    const supabase = createSupabaseClient();
+    const supabase = createSupabaseAdminClient();
     const { data, error } = await supabase.from('session_history')
         .insert({
             companion_id: companionId,
@@ -105,7 +104,7 @@ export const getUserSession = async(userId: string, limit=10) => {
 }
 
 export const getUserCompanions = async(userId: string) => {
-    const supabase = createSupabaseClient();
+    const supabase = createSupabaseAdminClient();
     const {data, error} = await supabase
         .from('companions')
         .select()
@@ -149,7 +148,7 @@ export const getUserCompanions = async(userId: string) => {
 
 export const newCompanionPermissions = async () => {
     const { userId, has } = await auth();
-    const supabase = createSupabaseClient();
+    const supabase = createSupabaseAdminClient();
 
     let limit = 0;
 

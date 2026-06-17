@@ -1,6 +1,7 @@
 import { clerkMiddleware } from '@clerk/nextjs/server';
+import { refreshSupabaseSession } from "@/utils/supabase/middleware";
 
-export default clerkMiddleware();
+export default clerkMiddleware((_auth, request) => refreshSupabaseSession(request));
 
 export const config = {
   matcher: [
